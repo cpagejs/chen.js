@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="gbk">
+	<title>demo</title>
+	<style>
+		a {
+			color: #757575;
+			text-decoration: none;
+		}
+	</style>
+	<link rel="stylesheet" href="shCoreDefault.css">
+	<script src='shCore.js'></script>
+	<script>SyntaxHighlighter.all();</script>
+</head>
+<body>
+<p>
+    <span style="background-color: rgb(242, 220, 219);"><strong><em><a name="ue"></a>UEditor</em></strong> 是一套开源的在线HTML编辑器,主要用于让用户在网站上获得所见即所得编辑效果,开发人员可以用 <em>UEditor</em> 把传统的多行文本输入框(textarea)替换为可视化的富...</span>
+</p>
+<pre class="brush:js;toolbar:false;">&lt;html&gt;
+    &lt;head&gt;
+    &lt;/head&gt;
+&lt;/html&gt;</pre>
+<p>
+    <br/>
+</p>
+
+<ul id='ua'>
+	<li><a href="#">aa</a></li>
+	<li><a href="#">aa2</a></li>
+	<li><a href="#">aa3</a></li>
+</ul>
+<script>
+	var ua = document.getElementById('ua');
+	var oLi = ua.getElementsByTagName('a');
+	for(var i=0; i<oLi.length; i++){
+		oLi[i].index = i;
+		oLi[i].onclick = function(){
+			// this.style.color = '#f60';
+			alert(this.index);
+		}
+	}
+</script>
+</body>
+</html>
