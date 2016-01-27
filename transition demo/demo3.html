@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css3 transition形式动画,对象内只有属性名称和值</title>
+    <style>
+        #box{color:#fff;}
+    </style>
+    <script src="../Chen/chen.js"></script>
+    <script>
+      $(function(){
+        //css3 transition形式动画,对象内只有属性名称和值
+        $('#box').click(function(){
+          // $(this).transition({'width':'200px','height':'200px'},'all 2s');
+          //回调函数
+          // $(this).transition({'width':'200px','height':'200px'},'all 2s',function(){alert(123)});
+          // $(this).transition({'width':'200px','height':'200px'},'all 2s',function(){
+          //   $(this).transition({'width':'100px','height':'100px'},'all 2s');
+          // });
+          //
+          //参数true，返回对象初始状态
+          // $(this).transition({'width':'200px','height':'200px'},'all 2s',true);
+          //回调函数加参数
+          $(this).transition({'width':'200px','height':'200px'},'all 2s',function(){
+            $('#pox').html('多参数');
+          },true);;
+
+        });
+        
+      });
+    </script>
+</head>
+<body>
+  <div id="box" title="app" style="width:100px;height:100px;background: #360; border:1px solid #f60;">
+    测试demo
+  </div>
+  <div id="pox"></div>
+</body>
+</html>

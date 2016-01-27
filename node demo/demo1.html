@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>节点操作demo1</title>
+    <style>
+        p{height: 50px; border: 1px solid #f60;}
+    </style>
+    <script src="../Chen/chen.js"></script>
+    <script>
+        $(function(){
+//            alert($('p').opacity(20));
+//            $('p').click(function(){
+//                alert($(this).index());
+//            });
+//            $('#box').next().css('color','red');
+//            $('#box').parent().css('color','red');
+//            $('.list').nextAll().css('color','red');
+//            $('.list').prevAll().css('color','red');
+            $('.list').siblings().css('color','red');
+//            $('.app').css('color','red');
+//            $('li').random().css('color','red');
+        });
+
+    </script>
+</head>
+<body>
+<div id="box" style="font-size: 30px;">
+    <p data-title='app'>
+        <span class='sp'>span1</span><span class='sp'>span2</span>
+        <em class="em">em</em>
+    </p>
+    <p data-title='bpp ddd'>
+        <span class='sp2'>pspan1</span><em class="em">em</em>
+    </p>
+    <p data-title='app ff-sd'>
+        <span class='sp3'>pspan2</span><em class="em">em</em>
+    </p>
+    <p></p>
+    <p data-title='123'>
+        <span class='sp2'>pspan3</span>
+    </p>
+    <div class="pox pox1">
+        <span data-title="span1">aa</span>
+        <em class='em1'> aa</em>
+        <input type="text" id='in1' value='测试'>
+        <input type="text" value='测试'>
+    </div>
+    <div class="pox">
+        <span>aa</span>
+        <em class='em1'> aa</em>
+        <input type="text" id='in2' value='测试'>
+        <input type="text" value='测试'>
+    </div>
+    <div class="pox">
+        <span>aa</span>
+        <em> aa</em>
+        <input type="text" value='测试'>
+        <input type="text" value='测试'>
+    </div>
+</div>
+<div id='d2'>
+    <span>divspan3</span>
+    <span>divspan3</span>
+    <span>divspan3</span>
+    <em>divspan3</em>
+</div>
+<ul>
+    <li>li</li>
+    <li>li</li>
+    <li class="list app">li</li>
+    <li>li</li>
+    <li>li</li>
+    <li>li</li>
+</ul>
+<!-- <p class="pp">ppp1</p>
+<p class="pp"><span>ppp2</span></p>
+<p class="pp"><span class="s1">ppp3</span></p> -->
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo2</title>
+    <style>
+        p{height: 50px; border: 1px solid #f60;}
+    </style>
+    <script src="../Chen/chen.js"></script>
+    <script>
+        $(function(){
+            // $('#box #sp').css('color','red');
+            // $('#box p .sp2').css('color','red');
+            // $('#box').find('.sp2').eq(1).css('color','green');
+            // $('.sp2:first()').css('color','green');
+            // $('p:last()').css('color','green');
+            // $('p').first().css('color','red');
+            // $('p').last().css('color','red');
+            // $('#box p').gt(1).css('color','red');
+            // $('p:even').css('color','red');
+
+            // $('span:first').css('color','red');
+            // $('span:last').css('color','red');
+            // $('#box span:odd').css('color','red');
+            // $('#box span:eq(1)').css('color','red');
+            // $('#box span:nlt(2)').css('color','red');
+            // $('#box span:eq()').css('color','red');
+            // $('#box span:gt(2)').css('color','red');
+            // $('#box p:empty').css('borderWidth','5px');
+
+            // $('#box .pox:input').css('color','red');
+             // $('#box .pox:last input').css('color','red');
+             // $('#div .pox').css('color','red');
+             // $('#box .pox:lt(2) span i').css('color','green');
+             // $('[data-title]').css('color','red');
+//              $('[data-title!=app]').css('color','red');
+
+            // $('[title=dd]').css('color','red');
+            // $('[data-title^=bpp]').css('color','red');
+            // $('p[title=dd]').css('color','red');
+            // $('[data-title$=ddd]').css('color','red');
+            // $('[data-title!=app]').css('color','red');
+            // $('[data-title*=ff]').css('color','red');
+
+             // $('p[data-title^=123]').css('color','green');
+//             $('#d2 em').css('color','red');
+//            $('#box .pox .span1').css('color','green');
+//             $('div p .sp2').css('color','green');
+//            $('p:first span').css('color','red');
+//            $('p:last span:first').css('color','red');
+            $('div p[data-title=app] em').css('color','red');
+
+
+        });
+
+    </script>
+</head>
+<body>
+    <div id="box" style="font-size: 30px;">
+        <p data-title='app'>
+            <span class='sp'>span1</span><span class='sp'>span2</span>
+            <em class="em">em</em>
+        </p>
+        <p data-title='bpp ddd'>
+            <span class='sp2'>pspan1</span><em class="em">em</em>
+        </p>
+        <p data-title='app ff-sd'>
+            <span class='sp3'>pspan2</span><em class="em">em</em>
+        </p>
+        <p></p>
+        <p data-title='123'>
+            <span class='sp2'>pspan3</span>
+        </p>
+        <div class="pox">
+            <span data-title="span1">aa</span>
+            <em class='em1'> aa</em>
+            <input type="text" id='in1' value='测试'>
+            <input type="text" value='测试'>
+        </div>
+        <div class="pox">
+            <span>aa</span>
+            <em class='em1'> aa</em>
+            <input type="text" id='in2' value='测试'>
+            <input type="text" value='测试'>
+        </div>
+        <div class="pox">
+            <span>aa</span>
+            <em> aa</em>
+            <input type="text" value='测试'>
+            <input type="text" value='测试'>
+        </div>
+    </div>
+    <div id='d2'>
+        <span>divspan3</span>
+        <span>divspan3</span>
+        <span>divspan3</span>
+        <em>divspan3</em>
+    </div>
+    <!-- <p class="pp">ppp1</p>
+    <p class="pp"><span>ppp2</span></p>
+    <p class="pp"><span class="s1">ppp3</span></p> -->
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css3 transition形式动画,运动时间与方式在对象内</title>
+    <style>
+        #box{color:#fff;}
+    </style>
+    <script src="../Chen/chen.js"></script>
+    <script>
+      $(function(){
+        //css3 transition形式动画,运动时间与方式在对象内
+        // $('#box').transition({'width':'200px 1s ease-in-out','height':'200px 2s ease'},function(){alert(123)});
+        //true,返回对象初始状态
+        // $('#box').transition({'width':'200px 1s ease-in-out','height':'200px 2s ease'},true);
+
+        $('#box').click(function(){
+          $(this).transition({'width':'200px 1s ease-in-out 1s','height':'200px 5s ease 2s'},true);
+        });
+
+      });
+    </script>
+</head>
+<body>
+  <div id="box" title="app" style="width:100px;height:100px;background: #360; border:1px solid #f60;">
+    测试demo
+  </div>
+</body>
+</html>

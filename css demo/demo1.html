@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo5</title>
+    <style>
+        #box {transform: translate(20px,30px);}
+    </style>
+    <script src="../Chen/chen.js"></script>
+    <script>
+    $(function(){
+        /*设置css样式
+         * 1,键值对形式传值，可以传递三个参数
+         * @para attr:属性名称
+         * @para value:属性值
+         * @para arg:false/true,注意false只针对transform属性其效果，false表示不替换原有的transform样式，true则替换，默认为true
+         * 2，对象形式传值，可以传递两个参数
+         * @para attr  {'width':'20em'}
+         * @para value:false/true,注意false只针对transform属性其效果，false表示不替换原有的transform样式，true则替换，默认为true
+         * */
+        $('p').first().css('color','red');
+        $('#app .sq').parent().css('fontSize','30px');
+
+       $('#box').css({'transform':'rotate(60deg)'},false);
+//       $('#box').css({'width':'300px','height':'50px'});
+//       $('#box').css({'width':'300px','height':'50px','transform':'rotate(60deg)'},false);
+//       $('#box').css('transform','rotate(60deg)',false);
+//       $('#box').css('transform','rotate(60deg)');
+
+    });
+
+    </script>
+</head>
+<body>
+<div id="box" title="app" style="width:100px;height:100px;background: #360; border:1px solid #f60;"><e>eeee</e>apapapapapappapapap</div>
+<div id="pox"></div>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<p>ppppppppppppppppppppppppppppppppp</p>
+<div id="app">
+	<span class="sq">span1</span>
+	<span class="sq">span2</span>
+	<span class="sq">span3</span>
+</div>
+</body>
+</html>

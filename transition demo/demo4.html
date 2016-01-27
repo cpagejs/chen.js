@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>css3 transition形式动画,对象内只有属性名称和值</title>
+    <style>
+        #box{color:#fff;}
+    </style>
+    <script src="../Chen/chen.js"></script>
+    <script>
+      $(function(){
+        //运动与停止
+          $('#start').click(function(){
+              $('#box').transition({'width':'200','height':'200'},5000);
+          });
+          $('#stop').click(function(){
+              $('#box').stop();
+          });
+      });
+    </script>
+</head>
+<body>
+  <div id="box" title="app" style="width:100px;height:100px;background: #360; border:1px solid #f60;">
+    测试demo
+  </div>
+  <input type="button" value="开始" id="start">
+  <input type="button" value="停止" id="stop">
+</body>
+</html>

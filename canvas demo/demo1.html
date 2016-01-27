@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas demo1</title>
+	<script src='../Chen/chen.js'></script>
+	<script>
+		$(function(){
+			// $('#canvas').canvas({
+			// 	shape:'line',
+			// 	style:{
+			// 		x:100,
+			// 		y:100,
+			// 		to:200 300
+			// 	}
+			// });
+			$('#canvas').drawArc({
+				x:100,
+				y:100,
+				r:50,
+				start:0,
+				end:360,
+				translate: '100 300',
+				fill:true,
+				fillStyle:'#f60',
+				lineWidth:15
+			}).drawRect({
+				x:100,y:100,w:50,h:200
+			});
+		});
+	</script>
+</head>
+<body>
+	<canvas id='canvas' width=500 height=500 style="background: #ccc"></canvas>
+</body>
+</html>
