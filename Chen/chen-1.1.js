@@ -1,6 +1,9 @@
 ﻿/*chen.js是一个开源免费的javascript库,意在使web开发更快捷，更高效。目前包含dom节点选择，dom节点操作，事件操作，浏览器检测，ajax，动画，存储，工具函数，canvas等功能。
+作者：陈浩
 版本：1.0
 项目地址：https://github.com/chenhaozhi/chen.js
+QQ群:535484409
+微博:http://weibo.com/u/5840549439
 * */
 ;(function(){
 //设置标识符，前台调用
@@ -599,6 +602,18 @@ function SelectNode(){
 		this.elements = temps;
 		return this;
 	};
+	//获取子节点
+	this.children = function(){
+		var temps = [];
+		for(var i=0; i<this.elements.length; i++){
+			var e = removeWhiteNodes(this.elements[i].childNodes);
+			for(var j=0; j< e.length; j++){
+				temps.push(e[j]);
+			}
+		}
+		this.elements = temps;
+		return this;
+	};
 	//小于某个节点
 	this.lt = function(item){
 		item = parseInt(item);
@@ -645,7 +660,8 @@ function SelectNode(){
 //获取dom节点对象结束
 
 /*dom节点操作对象开始
-样式设置，css,html,text,attr,val,opacity,addClass,removeClass,replaceClass,addRule，removeRule,remove元素，replace元素等
+样式设置，css,html,text,attr,val,opacity,addClass,removeClass,replaceClass,addRule，removeRule,
+remove元素，replace，has
 */
 function HandelNode(){
 	//是否存在某个class值
@@ -754,7 +770,7 @@ function HandelNode(){
 		for(var i=0; i<elems.length; i++){
 			if(arguments.length == 1){
 				var oldStr = elems[i].getAttribute('value');
-				elems[i].setAttribute(oldStr,'123');
+				elems[i].setAttribute(oldStr,str);
 			}else if(arguments.length == 0){
 				if(elems[i].nodeName.match(/INPUT|TEXTAREA|SELECT|RADIO|CHECKBOX/)){
 					return elems[i].value;
@@ -846,6 +862,31 @@ function HandelNode(){
 			sheet.removeRule(item);
 		}
 	};
+	//删除节点
+	this.remove = function(index){
+		for (var i=0; i<this.elements.length; i++) {
+			if(index >= 0){
+				this.elements[i].removeChild(removeWhiteNodes(this.elements[i].childNodes)[index]);
+			}else{
+				throw new Error('remove方法：需要传递移除的节点下标，且下标为整数');
+			}
+		}
+		return this;
+	};
+	//添加节点,1.1版本支持双标签
+	this.append = function(str){
+		for (var i=0; i<this.elements.length; i++) {
+			var stag = str.match(/<[a-zA-Z]+>/g);
+			var tag = stag.toString().substring(1,stag.toString().length-1);
+			str.match(/<[a-zA-Z]+>(.*)<\/[a-zA-Z]>/g);
+			var inn = RegExp.$1;
+			var node = document.createElement(tag);
+			node.innerHTML = inn;
+			this.elements[i].appendChild(node);
+		}
+		return this;
+	};
+
 }
 //节点操作对象结束
 
@@ -1580,6 +1621,16 @@ function page(){
 			height: document.documentElement.clientHeight
 		}
 	}
+}
+
+//删除空白节点
+function removeWhiteNodes(node){
+	for(var i = 0; i<node.length; i++){
+		if(node[i].nodeType === 3 && /^\s+$/.test(node[i].nodeValue)){
+			node[i].parentNode.removeChild(node[i]);
+		}
+	}
+	return node;
 }
 
 //跨浏览器添加事件绑定

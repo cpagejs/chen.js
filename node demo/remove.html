@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>remove</title>
+    <script src="../chen-1.1.js"></script>
+    <script>
+        $(function(){
+            var list = $('#list');
+            list.remove(0);
+        });
+    </script>
+</head>
+<body>
+    <ul id="list">
+        <li>Coffee</li>
+        <li>Tea</li>
+        <li>Milk</li>
+    </ul>
+<p>remove方法：需要传递移除的节点下标，且下标为整数</p>
+</body>
+</html>
