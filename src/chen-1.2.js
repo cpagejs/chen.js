@@ -1,6 +1,6 @@
 ﻿/*chen.js是一个开源免费的javascript库,意在使web开发更快捷，更高效。目前包含dom节点选择，dom节点操作，事件操作，浏览器检测，ajax，动画，存储，工具函数，canvas等功能。
 作者：陈浩
-版本：1.0
+版本：1.2
 项目地址：https://github.com/chenhaozhi/chen.js
 QQ群:535484409
 微博:http://weibo.com/u/5840549439
@@ -24,6 +24,7 @@ function Chen(args){
 	State.call(this);
 	Transition.call(this);
 	Canvas.call(this);
+	Storage.call(this);
 
 	switch(typeof args){
 		case 'function':
@@ -81,6 +82,8 @@ Chen.enlarge({
 	//类型检测
 	isFunction:isFunction,
 	isArray: isArray,
+	isString: isString,
+	isObject: isObject,
 	toArray: toArray,
 	inArray: inArray,
 	joinArray: joinArray,
@@ -996,16 +999,36 @@ function ChenEvent(){
 * */
 function State(){
 	// 设置元素隐藏
-	this.hide = function() {
-		for(var i=0; i<this.elements.length; i++) {
-			this.elements[i].style.display = 'none';
+	this.hide = function(timer) {
+		if(timer && typeof timer == 'number') {
+			for(var i=0; i<this.elements.length; i++) {
+				var el =  this.elements[i];
+				el.style.display = 'none';
+				setTimeout(function(){
+					el.style.display = 'block';
+				},timer);
+			}
+		}else if(!timer){
+			for(var i=0; i<this.elements.length; i++) {
+				this.elements[i].style.display = 'none';
+			}
 		}
 		return this;
 	};
 	// 设置元素显示
-	this.show = function() {
-		for(var i=0; i<this.elements.length; i++) {
-			this.elements[i].style.display = 'block';
+	this.show = function(timer) {
+		if(timer && typeof timer == 'number') {
+			for(var i=0; i<this.elements.length; i++) {
+				var el =  this.elements[i];
+				el.style.display = 'block';
+				setTimeout(function(){
+					el.style.display = 'none';
+				},timer);
+			}
+		}else if(!timer){
+			for(var i=0; i<this.elements.length; i++) {
+				this.elements[i].style.display = 'block';
+			}
 		}
 		return this;
 	};
@@ -1577,6 +1600,14 @@ function isFunction(fn){
 function isArray(arr){
 	return arr instanceof Array;
 }
+function isString(str){
+	if(str.constructor == String) return true;
+	return false;
+}
+function isObject(str){
+	if(str.constructor == Object) return true;
+	return false;
+}
 //判断一个元素是否在一个数组中
 function inArray(arr, value){
 	if(isArray(arr)){
@@ -1750,6 +1781,160 @@ function cookie(data){
 		return cookieValue;
 	}
 }
+
+/*storage存储
+*/
+function Storage(){
+	//检查数据类型
+	function check(type){
+		if(type == 'localStorage' || type == 'sessionStorage') return true;
+		return false;
+	}
+	function setType(t,k,v){
+		switch(t){
+			case 'localStorage':
+				localStorage.setItem(k,v);
+				break;
+			case 'sessionStorage':
+				sessionStorage.setItem(k,v);
+				break;
+		}
+	}
+	function getType(t,k){ 
+		switch(t){
+			case 'localStorage': 
+				return localStorage.getItem(k);
+				break;
+			case 'sessionStorage':
+				return sessionStorage.getItem(k);
+				break;
+		}
+	}
+	this.storage = {
+		type: function(type){
+			if(check(type)) return type;
+			return '此数据类型当前不受支持！'
+		},
+		//type:localStorage,sessionStorage
+		//obj: {key:val,key:val,...}，[{},{},...]
+		set: function(type,obj){
+			if(check(type)){
+				if(isArray(obj)){
+					for(var i=0; i<obj.length; i++){
+						if(isObject(obj[i])){
+							for(var j in obj[i]){
+								setType(type,j,obj[i][j]);
+							}
+						}
+					}
+				}else if(isObject(obj)){
+					for(var i in obj){
+						setType(type,i,obj[i]);
+					}
+				}
+			}
+		},
+		//type:localStorage,sessionStorage
+		//obj: key,或者 [key1,key2,...]
+		get: function(type,obj) {
+			if(check(type) && obj){
+				if(isString(obj)){
+					return getType(type,obj);
+				}else if(isArray(obj)){
+					var arr = [], json='',jons2='';
+					for(var i = 0; i<obj.length; i++){
+						switch(type){
+							case 'localStorage':
+								arr.push({"key":obj[i],"value":localStorage.getItem(obj[i])});
+								break;
+							case 'sessionStorage':
+								arr.push({"key":obj[i],"value":sessionStorage.getItem(obj[i])});
+								break;
+						}
+					}
+					for(var j=0; j<arr.length; j++){
+						json += arr[j]['key']+':'+arr[j]['value']+',';
+					}
+					json2 = '{'+json.substring(0,json.lastIndexOf(","))+'}';
+					return json2;
+				}
+			}else if(arguments.length == 1 && !obj){
+				var arr = [], json='',jons2='', i=0;
+				switch(type){
+					case 'localStorage':
+						for(; i<localStorage.length; i++){
+							var key = localStorage.key(i);
+							var value = localStorage.getItem(key);
+							arr.push({"k":key,"v":value});
+						}
+						break;
+					case 'sessionStorage':
+						for(; i<sessionStorage.length; i++){
+							var key = sessionStorage.key(i);
+							var value = sessionStorage.getItem(key);
+							arr.push({"k":key,"v":value});
+						}
+					break;
+				}
+				for(var j=0; j<arr.length; j++){
+					json += arr[j]['k']+':'+arr[j]['v']+',';
+				}
+				json2 = '{'+json.substring(0,json.lastIndexOf(","))+'}';
+				return json2;
+			}	
+		},
+		//type:localStorage,sessionStorage
+		//obj: [key1,key2,...]
+		remove: function(type,obj){  
+			if(check(type)) {
+				if(isString(obj)){
+					switch(type){
+						case 'localStorage': 
+							localStorage.removeItem(obj);
+							break;
+						case 'sessionStorage':
+							sessionStorage.removeItem(obj);
+							break;
+					}
+				}else if(isArray(obj)){
+					switch(type){
+						case 'localStorage': 
+							for(var i=0; i<obj.length; i++){
+								localStorage.removeItem(obj[i]);
+							}
+							break;
+						case 'sessionStorage':
+							for(var i=0; i<obj.length; i++){
+								sessionStorage.removeItem(obj[i]);
+							}
+							break;
+					}
+				}
+			}
+		},
+		clear: function(type){
+			if(!type){
+				localStorage.clear();
+				sessionStorage.clear();
+			}
+			if(check(type)){
+				switch(type){
+					case 'localStorage':
+						localStorage.clear();
+						break;
+					case 'sessionStorage':
+						sessionStorage.clear();
+						break;
+				}
+			}
+		}
+	}
+
+	return {
+		storage: this.storage
+	}
+}
+
 /*localStorage存储
 *key名称，value值。获取值$.local(key),设置值$.local(key,value),取消之$.local(key,'',false)
 * */

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Storage数据存储</title>
+    <script src="../../Chen/chen.min.js"></script>
+    <script>
+      $(function(){
+       // console.log($().storage.type('123'));
+       var str1 = {"id":1,"name":"zhang","add":"home"};
+       $().storage.set("localStorage",str1);
+       
+       var str2 = [{"id2":2,"name2":"xin","add2":"home"},{"id3":3,"name3":"li","add3":"home2"}];
+       $().storage.set("localStorage",str2);
+
+       //清理所有数据
+       // $().storage.clear("localStorage");
+
+       //移除数据
+       // $().storage.remove("localStorage","name");
+
+       //获取单个
+       console.log($().storage.get("localStorage","name"));
+
+       //获取一组数据
+       console.log($().storage.get("localStorage",["id","name","id2"]));
+
+       //获取所有数据
+       console.log($().storage.get("localStorage"));
+      });
+    </script>
+</head>
+<body>
+  <div>Storage数据存储</div>
+</body>
+</html>
