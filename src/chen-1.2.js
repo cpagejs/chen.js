@@ -1514,12 +1514,16 @@ function ajax(conf){
 			}
 		};
 	}
-	if (conf.type === 'post' || conf.type === 'put' || conf.type === 'delete') {
+	if (conf.type === 'post') {
 		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		xhr.send(conf.data);        //post方式将数据放在send()方法里
-	} else {
+	}else if(conf.type === 'put' || conf.type === 'delete'){
+		xhr.setRequestHeader('Content-Type', 'json');
+		xhr.send(conf.data); 
+	}else {
 		xhr.send(null);        //get方式则填null
 	}
+	
 	if (conf.async === false) {
 		callback();
 	}
