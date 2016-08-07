@@ -1452,10 +1452,11 @@ function Canvas(){
 }
 
 /*ajax方法
-* @para method  get post
+* @para type  get post put delete
 * @para url
 * @para data 对象形式传参
 * @para timeout 毫秒，超出指定时间取消请求
+* @para beforeSend
 * @para success
 * @para error
 * @para complated
@@ -1504,13 +1505,16 @@ function ajax(conf){
 	}, conf.timeout);
 
 	if (conf.async === true) {  //true表示异步，false表示同步
-		conf.onreadystatechange = function () {
+		xhr.onreadystatechange = function () {
+			if(xhr.readyState == 2){
+				conf.beforeSend();
+			}
 			if (xhr.readyState == 4 && !requestDone) {   //判断对象的状态是否交互完成
 				callback();         //回调
 			}
 		};
 	}
-	if (conf.method === 'post') {
+	if (conf.type === 'post' || conf.type === 'put' || conf.type === 'delete') {
 		xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		xhr.send(conf.data);        //post方式将数据放在send()方法里
 	} else {
@@ -1522,18 +1526,19 @@ function ajax(conf){
 	function callback() {
 		if (xhr.status == 200) {  //判断http的交互是否成功，200表示成功
 			if(conf.dataType == 'text' || conf.dataType == 'TEXT'){
-				if(!conf.success) conf.success(xhr.responseText);
+				conf.success(xhr.responseText);
 			}
 			if(conf.dataType == 'xml' || conf.dataType == 'XML'){
-				if(!conf.success) conf.success(xhr.responseXML);
+				conf.success(xhr.responseXML);
 			}
 			if(conf.dataType == 'json' || conf.dataType == 'JSON'){
-				if(!conf.success) conf.success(eval("("+xhr.responseText+")"));
+				conf.success(eval("("+xhr.responseText+")"));
 			}
+
 		} else {
 			conf.error(xhr.status,xhr.statusText);    //失败
 		}
-		xhr.complete();
+		if(conf.complete) conf.complete();
 		//避免内存泄漏，清理文档
 		xhr = null;
 	}
@@ -1878,7 +1883,7 @@ function Storage(){
 				}
 				for(var j=0; j<arr.length; j++){
 					json += arr[j]['k']+':'+arr[j]['v']+',';
-				}console.log(json);
+				}
 				json2 = '{'+json.substring(0,json.lastIndexOf(","))+'}';
 				return json2;
 			}	

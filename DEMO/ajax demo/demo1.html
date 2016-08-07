@@ -14,6 +14,9 @@
                     'age' : 22
                 },
                 timeout : 5000,
+                beforeSend: function(){
+                    console.log('beforeSend');
+                },
                 success : function (response) {
                     alert(response);
                 },
@@ -21,7 +24,7 @@
                     alert('获取数据错误！错误代号：' + status + '，错误信息：' + statusText);
                 },
                 complete : function () {
-                    alert("请求完成");
+                    console.log("请求完成");
                 },
                 async : true
             });
@@ -29,6 +32,16 @@
     </script>
 </head>
 <body>
-
+    ajax方法
+    调用：$.ajax({})<br/>
+    type  get post put delete <br/>
+    url<br/>
+    data 对象形式传参<br/>
+    timeout 毫秒，超出指定时间取消请求<br/>
+    beforeSend<br/>
+    success<br/>
+    error<br/>
+    complete<br/>
+    async  true表示异步，false表示同步<br/>
 </body>
 </html>
