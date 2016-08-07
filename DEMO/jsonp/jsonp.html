@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jsonp</title>
+</head>
+<body>
+	<script type="text/javascript" src="../chen-1.2.js"></script>
+	<script type="text/javascript">
+		//jsonp函数，包含url,jsonp,jsonpCallback,success参数
+		//success的函数名必须和jsonpCallback的名称一致
+		$.jsonp({
+			url: './jsonp.php',
+			jsonp: '_jsonp',
+			jsonpCallback: 'cb',
+			success: function cb(data){
+				alert(data);
+			}
+		});
+	</script>
+</body>
+</html>
