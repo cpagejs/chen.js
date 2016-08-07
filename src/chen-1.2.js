@@ -1,6 +1,6 @@
 ﻿/*chen.js是一个开源免费的javascript库,意在使web开发更快捷，更高效。目前包含dom节点选择，dom节点操作，事件操作，浏览器检测，ajax，动画，存储，工具函数，canvas等功能。
 作者：陈浩
-版本：1.2
+版本：1.2.1
 项目地址：https://github.com/chenhaozhi/chen.js
 QQ群:535484409
 微博:http://weibo.com/u/5840549439
@@ -96,7 +96,8 @@ Chen.enlarge({
 	session: session,
 
 	//ajax
-	ajax:ajax
+	ajax:ajax,
+	jsonp: jsonp
 });
 
 //浏览器检测
@@ -1549,6 +1550,52 @@ function ajax(conf){
 
 	return this;
 }
+
+/*jsonp方法
+* @para url
+* @para jsonp 
+* @para jsonpCallback 
+* @para callback
+* */
+function jsonp(conf){
+	var script = document.createElement('script'),
+		name = conf.jsonp,
+		cbname = conf.jsonpCallback;
+
+	if(conf.url.indexOf('?') == -1){
+		conf.url += '?'+name+'='+cbname; 
+	}else {
+		conf.url += '&'+name+'='+cbname;
+	}
+
+	cbname = function(e){
+		try{
+			conf.success || conf.success(e);
+		}catch(e){
+			console.log(e);
+		}finally{
+			delete this;
+			script.parentNode.removeChild(script);
+		}
+	};
+
+	script.src = conf.url;
+	document.getElementsByTagName('head')[0].appendChild(script);
+
+	var scriptCb = document.createElement('script');
+	scriptCb.id = 'cbname';
+	try{
+		scriptCb.innerHTML = conf.success;
+		document.body.appendChild(scriptCb);
+	}catch(e){
+		console.log(e);
+	}finally{
+		delete this;
+		document.body.removeChild(scriptCb);
+	}
+	
+}
+
 
 //添加transform属性
 function addTransform(obj,str,arg){
