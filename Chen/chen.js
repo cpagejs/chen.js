@@ -1568,17 +1568,6 @@ function jsonp(conf){
 		conf.url += '&'+name+'='+cbname;
 	}
 
-	cbname = function(e){
-		try{
-			conf.success || conf.success(e);
-		}catch(e){
-			console.log(e);
-		}finally{
-			delete this;
-			script.parentNode.removeChild(script);
-		}
-	};
-
 	script.src = conf.url;
 	document.getElementsByTagName('head')[0].appendChild(script);
 
