@@ -5,7 +5,7 @@
 用一个script标签引入Chen.js到你的页面： 
 ```javascript
 ...
-<script src=chen.min.js></script>
+<script src="chen.min.js"></script>
 </body>
 </html>
 ```
