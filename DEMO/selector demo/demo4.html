@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <style>
+        p{height: 50px; border: 1px solid #f60;}
+    </style>
+    <script src="../../Chen/chen.min.js"></script>
+    <script>
+        $(function(){
+            $(".box").css("color","red");
+            $(".box").find(".title").css("color","green");
+            $(".box").find("p").css("fontSize","20px");
+            console.log();
+        });
+    </script>
+</head>
+<body>
+    <div class="box">
+        <p class="title">title1</p>
+    </div>
+    <div class="box">
+        <p class="title">title2</p>
+    </div>
+</body>
+</html>

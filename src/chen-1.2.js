@@ -631,29 +631,31 @@ function SelectNode(){
 	};
 	//查询某一个节点
 	this.find = function(elem){
-		var children = [], all=[], i= 0, j=0;
+		var children = [], all=[];
 		for(; i<this.elements.length; i++){
 			switch(elem.charAt(0)){
 				case '#':
 					children.push(document.getElementById(elem.substring(1)));
 					break;
 				case '.':
+					var k=0;
 					all = this.elements[i].getElementsByTagName('*');
-					for(; j<all.length; j++){
-						if(all[j].className == elem.substring(1)){
-							children.push(all[j]);
+					for(; k<all.length; k++){
+						if(all[k].className == elem.substring(1)){
+							children.push(all[k]);
 						}
 					}
 					break;
 				default:
+					var l = 0;
 					all = this.elements[i].getElementsByTagName(elem);
-					for(; j<all.length; j++){
-						children.push(all[j]);
+					for(; l<all.length; l++){
+						children.push(all[l]);
 					}
 					break;
 			}
 		}
-		this.elements = children;
+		this.elements = children; 
 		return this;
 	};
 	//获取一组节点对象的长度
