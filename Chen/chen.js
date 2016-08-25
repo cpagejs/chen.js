@@ -631,7 +631,7 @@ function SelectNode(){
 	};
 	//查询某一个节点
 	this.find = function(elem){
-		var children = [], all=[];
+		var children = [], all=[], i= 0;
 		for(; i<this.elements.length; i++){
 			switch(elem.charAt(0)){
 				case '#':
