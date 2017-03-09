@@ -2,15 +2,24 @@ var gulp = require('gulp'),
 	concat = require('gulp-concat'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
-	del = require('del');
+	del = require('del'),
+    pump = require('pump'),
+    uglifyjs = require('uglify-js'),
+    minifier = require('gulp-uglify/minifier');
 
-gulp.task('minifyjs', function() {
-    return gulp.src('src/*.js')
-        .pipe(concat('chen.js'))    
-        .pipe(gulp.dest('Chen/'))  
-        .pipe(rename({suffix: '.min'}))
-        .pipe(uglify())  
-        .pipe(gulp.dest('Chen/')); 
+gulp.task('minifyjs', function(cb) {
+    var options = {
+        preserveComments: 'license'
+    };
+    pump([
+        gulp.src('src/*.js'),
+        concat('chen.js'),
+        gulp.dest('Chen/'),
+        rename({suffix: '.min'}),
+        // uglify(),
+        minifier(options, uglifyjs),
+        gulp.dest('Chen/')
+    ],cb);
 });
 
 gulp.task('clean', function(cb) {

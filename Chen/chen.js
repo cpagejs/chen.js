@@ -1,6 +1,6 @@
 /*chen.js是一个开源免费的javascript库,意在使web开发更快捷，更高效。目前包含dom节点选择，dom节点操作，事件操作，浏览器检测，ajax，动画，存储，工具函数，canvas等功能。
 作者：陈浩
-版本：1.2.1
+版本：1.3
 项目地址：https://github.com/chenhaozhi/chen.js
 QQ群:535484409
 微博:http://weibo.com/u/5840549439
@@ -80,6 +80,7 @@ Chen.enlarge({
     hasNum:hasNum,
 
 	//类型检测
+	type: type,
 	isFunction:isFunction,
 	isArray: isArray,
 	isString: isString,
@@ -87,6 +88,13 @@ Chen.enlarge({
 	toArray: toArray,
 	inArray: inArray,
 	joinArray: joinArray,
+
+	isEqual:isEqual,
+	compare: compare,
+	repeatObj: repeatObj,
+	// objToMap: objToMap,
+	// mapToObj: mapToObj,
+
 	//浏览器，页面相关
 	page:page,
 
@@ -1640,7 +1648,30 @@ function hasNum(text){
     }
     return false;
 }
+
 //函数判断
+/**
+ * 判断数据类型
+ */
+function type(str){
+	var toString = Object.prototype.toString,
+		map = {
+			'[object Boolean]' : 'boolean',
+			'[object Number]'  : 'number',
+			'[object String]'  : 'string',
+			'[object Function]' : 'function',
+			'[object Array]'  : 'array',
+			'[object Date]'   : 'date',
+			'[object RegExp]'  : 'regExp',
+			'[object Undefined]': 'undefined',
+			'[object Null]'   : 'null',
+			'[object Object]'  : 'object',
+			'[object Map]' : 'map',
+			'[object Set]' : 'set',
+			'[object Symbol]' : 'symbol'
+		};
+	return map[toString.call(str)];
+}
 function isFunction(fn){ 
 	return fn instanceof Function;
 }
@@ -1685,6 +1716,120 @@ function joinArray(){
 	}
 	return arr;
 }
+
+/**
+ * 判断两个变量是否相等，只能匹配简单的数据类型
+ * @param str1
+ * @param str2
+ * @returns {boolean}
+ */
+function isEqual (str1, str2) {
+	return JSON.stringify(str1) === JSON.stringify(str2);
+}
+
+/**
+ * 判断两个变量是否相等, 此方法用于相同数据类型的变量比较
+ * @param a
+ * @param b
+ * @returns {boolean}
+ */
+function compare(a, b) {
+	var pt = /undefined|number|string|boolean/, fn = /^(function\s*)(\w*\b)/, cr = "constructor", cn = "childNodes", pn = "parentNode";
+	if (pt.test(typeof a) || pt.test(typeof b) || a === null || b === null) {
+		return a === b || (isNaN(a) && isNaN(b));
+	}
+	if (a[cr] !== b[cr]) {
+		return false;
+	}
+	switch (a[cr]) {
+		case Date:
+			return a.valueOf() === b.valueOf();
+		case Function:
+			return a.toString().replace(fn, '$1') === b.toString().replace(fn, '$1');
+		case Array:
+			if (a.length !== b.length) {
+				return false;
+			}
+			for (var i = 0; i < a.length; i++) {
+				if (a[i].toString() == b[i].toString()) { }
+			}
+			break;
+		default:
+			var alen = 0, blen = 0, d = void 0;
+			if (a === b) {
+				return true;
+			}
+			if (a[cn] || a[pn] || b[cn] || b[pn]) {
+				return a === b;
+			}
+			for (d in a) {
+				alen++;
+			}
+			for (d in b) {
+				blen++;
+			}
+			if (alen !== blen) {
+				return false;
+			}
+			for (d in a) {
+				if (a[d].toString() != b[d].toString()) {
+					return false;
+				}
+			}
+			break;
+	}
+	return true;
+}
+
+/**
+ * 字符串或函数的执行次数
+ * @param obj:类型为Function, String
+ */
+function repeatObj(obj, manyTime) {
+	if (type(manyTime) != 'number') {
+		throw new Error('函数repeat的参数manyTime类型为number');
+	}
+	switch (type(obj)) {
+		case 'string':
+			return obj.repeat(manyTime);
+		case 'function':
+			var arr = new Array(manyTime);
+			for (var i = 0; i < arr.length; i++) {
+				obj();
+			}
+			break;
+		default:
+			return null;
+	}
+}
+
+/**
+ * 对象转map对象
+ * @param obj
+ * @returns {Map}
+ */
+// function objToMap(obj){
+// 	if(type(obj) != 'object') return;
+// 	let map = new Map();
+// 	for(let i in obj){
+// 		map.set(i, obj[i]);
+// 	}
+// 	return map;
+// }
+
+/**
+ * map对象转普通对象
+ * @param map
+ * @returns {{}}
+ */
+// function mapToObj(map){
+// 	if(type(map) != 'map') return;
+// 	let obj = {}; 
+// 	map.forEach((val ,key)=>{
+// 		obj[key] = val;
+// 	});
+// 	return obj;
+// }
 
 //获取页面信息
 function page(){
@@ -1874,7 +2019,8 @@ function Storage(){
 							}
 						}
 					}
-				}else if(isObject(obj)){
+				}
+				if(isObject(obj)){
 					for(var i in obj){
 						setType(type,i,obj[i]);
 					}
@@ -1887,7 +2033,8 @@ function Storage(){
 			if(check(type) && obj){
 				if(isString(obj)){
 					return getType(type,obj);
-				}else if(isArray(obj)){
+				}
+				if(isArray(obj)){
 					var arr = [], json='',jons2='';
 					for(var i = 0; i<obj.length; i++){
 						switch(type){
@@ -1943,7 +2090,8 @@ function Storage(){
 							sessionStorage.removeItem(obj);
 							break;
 					}
-				}else if(isArray(obj)){
+				}
+				else if(isArray(obj)){
 					switch(type){
 						case 'localStorage': 
 							for(var i=0; i<obj.length; i++){
