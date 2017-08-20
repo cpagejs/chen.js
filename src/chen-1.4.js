@@ -1,6 +1,6 @@
 ﻿/*chen.js是一个开源免费的javascript库,意在使web开发更快捷，更高效。目前包含dom节点选择，dom节点操作，事件操作，浏览器检测，ajax，动画，存储，工具函数，canvas等功能。
 作者：陈浩
-版本：1.3
+版本：1.4
 项目地址：https://github.com/chenhaozhi/chen.js
 QQ群:535484409
 微博:http://weibo.com/u/5840549439
@@ -1045,21 +1045,27 @@ function State(){
 	};
 	//元素宽度
 	this.width = function(attr){
-		if(attr){
-			for(var i=0; i<this.elements.length; i++){
+		for(var i=0; i<this.elements.length; i++){
+			if(attr){
 				this.elements[i].style.width = attr;
 			}
+			else{
+				return this.elements[i].offsetWidth;
+			}
 		}
-		return this.elements[i].offsetWidth;
+		return this;
 	};
 	//元素高度
 	this.height = function(attr){
-		if(attr){
-			for(var i=0; i<this.elements.length; i++){
+		for(var i=0; i<this.elements.length; i++){
+			if(attr){
 				this.elements[i].style.height = attr;
 			}
+			else{
+				return this.elements[i].offsetHeight;
+			}
 		}
-		return this.elements[i].offsetHeight;
+		return this;
 	};
 
 	//设置元素居中显示
