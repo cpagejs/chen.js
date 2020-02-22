@@ -1,31 +1,31 @@
 var gulp = require('gulp'),
 	concat = require('gulp-concat'),
-	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
 	del = require('del'),
     pump = require('pump'),
     uglifyjs = require('uglify-js'),
-    minifier = require('gulp-uglify/minifier');
+    composer = require('gulp-uglify/composer')
+    ;
 
-gulp.task('minifyjs', function(cb) {
+function minifyjs(cb){
     var options = {
-        preserveComments: 'license'
+        // : 'license'
     };
+    var minify = composer(uglifyjs, console);
+
     pump([
         gulp.src('src/*.js'),
         concat('chen.js'),
-        gulp.dest('Chen/'),
+        gulp.dest('dist/'),
         rename({suffix: '.min'}),
-        // uglify(),
-        minifier(options, uglifyjs),
-        gulp.dest('Chen/')
+        minify(options),
+        gulp.dest('dist/')
     ],cb);
-});
+}
 
-gulp.task('clean', function(cb) {
+function clean(cb){
     del(['Chen'], cb)
-});
+}
 
-gulp.task('default', [], function() {
-    gulp.start('minifyjs');
-});
+exports.build = clean;
+exports.default = minifyjs;
