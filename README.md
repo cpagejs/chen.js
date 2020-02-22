@@ -4,9 +4,18 @@
 
 ## 使用
 用一个script标签引入Chen.js到你的页面： 
-```javascript
-...
+```
 <script src="chen.min.js"></script>
 </body>
 </html>
 ```
+
+可以直接引用线上资源
+```
+1.5.0版本
+
+<script src="https://gist.github.com/chenhaozhi/ba90b20287a26e255f915fc75a312c02.js"></script>
+```
+
+具体案例参考example里面的案例
+
